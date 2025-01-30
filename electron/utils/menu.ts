@@ -13,14 +13,13 @@ const template: (Electron.MenuItemConstructorOptions | Electron.MenuItem)[] = [
     submenu: [
       {
         label: `Switch to Private mode`,
-        click: () => {
-          const rendererPath = join(__dirname, '..', 'renderer')
-          const mainPath = join('file://', join(rendererPath, 'index.html'))
-          const mainUrl = 'http://localhost:3000'
-          const modePath = app.isPackaged ? mainPath : mainUrl
-          windowManager.mainWindow?.getURL().includes('newcoin') ? windowManager.mainWindow?.loadURL(modePath) : windowManager.showMainWindow()
-          windowManager.sendMainViewState('Thread')
-        },
+        // click: () => {
+        //   const rendererPath = join(__dirname, '..', 'renderer')
+        //   const mainPath = join(rendererPath, 'index.html')
+        //   const mainUrl = 'http://localhost:3000'
+        //   const modePath = app.isPackaged ? `file://${mainPath}` : mainUrl
+        //   windowManager.mainWindow?.loadURL(modePath)
+        // },
       },
       {
         label: `Switch to Online mode`,
