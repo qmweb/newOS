@@ -313,9 +313,33 @@ export function handleAppIPCs() {
     return stopServer()
   })
 
-    // Load the URL in the main window
+    /**
+     * Handles the "loadUrl" IPC message to load a URL in the main window.
+     * If the URL is a web URL, it will be loaded in the main window.
+     * If the URL is a local file, it will be loaded in the main window.
+     * @param _event - The IPC event object.
+     * @param url - The URL to load.
+     * @returns Promise that resolves when the URL is loaded.
+     */
     ipcMain.handle(
       NativeRoute.loadUrl, 
-      async (_event, url: string) => windowManager.mainWindow?.loadURL(url)
+      async (_event, url: string) => {
+        if (url.includes('http://') || url.includes('https://')) {
+            // if the URL is a web URL
+            windowManager.mainWindow?.loadURL(url)
+        } else {
+          // if the URL is a local file
+          if (app.isPackaged) {
+            // if production (app is packaged)
+            const rendererPath = join(__dirname, '..', 'renderer')
+            const homePath = join(rendererPath, `${url}.html`)
+            windowManager.mainWindow?.loadURL(`file://${homePath}`)
+          } else {
+            // if development (app is not packaged)
+            const homeUrl = (url === 'index') ? 'http://localhost:3000' : `http://localhost:3000/${url}`
+            windowManager.mainWindow?.loadURL(homeUrl)
+          }
+        }
+      }
     )
 }

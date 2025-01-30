@@ -1,6 +1,6 @@
 'use client'
 
-import Link from 'next/link'
+import React from 'react'
 
 import ChoiceItem from '@/screens/Landing/ModeChoice/ChoiceItem'
 
@@ -16,24 +16,26 @@ const choicesList = [
 ]
 
 const LandingChoiceScreen = () => {
-  const openApp = (url: string) => {
+  const loadAppUrl = (url: string) => {
     window.electronAPI?.loadUrl(url)
   }
-
+  
   return (
     <main className="relative min-h-screen bg-white">
       <div className="flex h-screen w-screen gap-x-6 p-6">
-        <Link
-          className="block h-full w-full no-underline" 
-          href={'/'}
+        <div
+          className="block h-full w-full" 
+          onClick={() => {
+            loadAppUrl('index')
+          }}
         >
           <ChoiceItem name={choicesList[0][0]} text={choicesList[0][1]} />
-        </Link>
+        </div>
         <div
-          onClick={() => {
-            openApp('https://os.newcoin.org')
-          }}
           className="block h-full w-full"
+          onClick={() => {
+            loadAppUrl('https://os.newcoin.org')
+          }}
         >
           <ChoiceItem name={choicesList[1][0]} text={choicesList[1][1]} />
         </div>
