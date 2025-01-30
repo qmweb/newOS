@@ -36,9 +36,11 @@ import { registerGlobalShortcuts } from './utils/shortcut'
 const preloadPath = join(__dirname, 'preload.js')
 const rendererPath = join(__dirname, '..', 'renderer')
 
+const homePath = join(rendererPath, 'index.html')
 const mainPath = join(rendererPath, 'landing.html')
 const quickAskPath = join(rendererPath, 'search.html')
 
+const homeUrl = 'http://localhost:3000'
 const mainUrl = 'http://localhost:3000/landing'
 const quickAskUrl = `${mainUrl}/search`
 
@@ -109,6 +111,19 @@ app
         windowManager.showMainWindow()
       }
     })
+  })
+  .then(() => {
+    const menu = Menu.getApplicationMenu()
+    const menuHomeUrl = app.isPackaged ? `file://${homePath}` : homeUrl
+
+    if (menu) {
+      const submenu = menu.items[0]?.submenu
+      if (submenu) {
+        submenu.items[0].click = () => {
+          windowManager.mainWindow?.loadURL(menuHomeUrl)
+        }
+      }
+    }
   })
 
 app.on('open-url', (_event, url) => {
