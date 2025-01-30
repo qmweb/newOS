@@ -1,7 +1,5 @@
 'use client'
 
-import Link from 'next/link'
-
 import ChoiceItem from '@/screens/Landing/ModeChoice/ChoiceItem'
 
 const choicesList = [
@@ -23,17 +21,19 @@ const LandingChoiceScreen = () => {
   return (
     <main className="relative min-h-screen bg-white">
       <div className="flex h-screen w-screen gap-x-6 p-6">
-        <Link
-          className="block h-full w-full no-underline" 
-          href={'/'}
+        <div
+          className="block h-full w-full" 
+          onClick={() => {
+            openApp('file://renderer/index.html')
+          }}
         >
           <ChoiceItem name={choicesList[0][0]} text={choicesList[0][1]} />
-        </Link>
+        </div>
         <div
+          className="block h-full w-full"
           onClick={() => {
             openApp('https://os.newcoin.org')
           }}
-          className="block h-full w-full"
         >
           <ChoiceItem name={choicesList[1][0]} text={choicesList[1][1]} />
         </div>
