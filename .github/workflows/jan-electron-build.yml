@@ -29,15 +29,15 @@ jobs:
           draft: true
           prerelease: false
 
-  build-macos:
-    uses: ./.github/workflows/template-build-macos.yml
-    secrets: inherit
-    permissions:
-      contents: write
-    with:
-      ref: ${{ github.ref }}
-      public_provider: github
-      new_version: v0.2.0
+  # build-macos:
+  #   uses: ./.github/workflows/template-build-macos.yml
+  #   secrets: inherit
+  #   permissions:
+  #     contents: write
+  #   with:
+  #     ref: ${{ github.ref }}
+  #     public_provider: github
+  #     new_version: v0.2.0
 
   build-windows-x64:
     uses: ./.github/workflows/template-build-windows-x64.yml
@@ -47,20 +47,20 @@ jobs:
     with:
       ref: ${{ github.ref }}
       public_provider: github
-      new_version: v0.2.0
+      new_version: v0.2.4
 
-  build-linux-x64:
-    uses: ./.github/workflows/template-build-linux-x64.yml
-    secrets: inherit
-    permissions:
-      contents: write
-    with:
-      ref: ${{ github.ref }}
-      public_provider: github
-      new_version: v0.2.0
+  # build-linux-x64:
+  #   uses: ./.github/workflows/template-build-linux-x64.yml
+  #   secrets: inherit
+  #   permissions:
+  #     contents: write
+  #   with:
+  #     ref: ${{ github.ref }}
+  #     public_provider: github
+  #     new_version: v0.2.0
 
   update_release_draft:
-    needs: [build-macos, build-windows-x64, build-linux-x64]
+    needs: [build-windows-x64]
     permissions:
       # write permission is required to create a github release
       contents: write
